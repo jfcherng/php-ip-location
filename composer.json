@@ -1,0 +1,34 @@
+{
+    "name": "jfcherng/ip-location",
+    "description": "利用 IP 查詢地理位置。",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Jack Cherng",
+            "email": "jfcherng@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Jfcherng\\Ip\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "require": {
+        "php": "^7.1.3"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.11.1",
+        "phpunit/phpunit": "^7.0"
+    },
+    "scripts": {
+        "fix": [
+            "php-cs-fixer fix --verbose"
+        ],
+        "test": [
+            "phpunit --verbose"
+        ]
+    }
+}

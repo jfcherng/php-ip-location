@@ -1,0 +1,31 @@
+# Garbage
+*.log
+*.pid
+*.tmp
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# some IDE things
+.idea/
+.tags*
+.ropeproject
+/.web-server-pid
+**/oracle.sqlite
+.php_cs.cache
+
+# composer
+composer.lock
+vendor/
+
+# tmp files
+/var/*
+!/var/.gitkeep
+*.7z
+*.zip
+
+*.dat
+*.datx
