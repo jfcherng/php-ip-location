@@ -2,6 +2,7 @@
     "name": "jfcherng/ip-location",
     "description": "利用 IP 查詢地理位置。",
     "type": "library",
+    "license": "MIT",
     "authors": [
         {
             "name": "Jack Cherng",
