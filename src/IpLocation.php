@@ -1,6 +1,8 @@
 <?php
 
-namespace Jfcherng\Ip;
+declare(strict_types=1);
+
+namespace Jfcherng\IpLocation;
 
 /**
  * Class for looking up IP location information.
@@ -150,12 +152,12 @@ class IpLocation
             return "-\tSystem Error";
         }
 
-        $ipbegin = implode('', unpack('L', $dataBegin));
+        $ipbegin = (int) implode('', unpack('L', $dataBegin));
         if ($ipbegin < 0) {
             $ipbegin += 2 ** 32;
         }
 
-        $ipend = implode('', unpack('L', $dataEnd));
+        $ipend = (int) implode('', unpack('L', $dataEnd));
         if ($ipend < 0) {
             $ipend += 2 ** 32;
         }
@@ -176,7 +178,7 @@ class IpLocation
                 return "-\tSystem Error";
             }
 
-            $ip1num = implode('', unpack('L', $ipData1));
+            $ip1num = (int) implode('', unpack('L', $ipData1));
             if ($ip1num < 0) {
                 $ip1num += 2 ** 32;
             }
@@ -194,7 +196,7 @@ class IpLocation
                 return "-\tSystem Error";
             }
 
-            $dataSeek = implode('', unpack('L', $dataSeek . chr(0)));
+            $dataSeek = (int) implode('', unpack('L', $dataSeek . chr(0)));
             fseek($fd, $dataSeek);
 
             $ipData2 = fread($fd, 4);
@@ -204,7 +206,7 @@ class IpLocation
                 return "-\tSystem Error";
             }
 
-            $ip2num = implode('', unpack('L', $ipData2));
+            $ip2num = (int) implode('', unpack('L', $ipData2));
             if ($ip2num < 0) {
                 $ip2num += 2 ** 32;
             }
@@ -229,7 +231,7 @@ class IpLocation
                 return "-\tSystem Error";
             }
 
-            $ipSeek = implode('', unpack('L', $ipSeek . chr(0)));
+            $ipSeek = (int) implode('', unpack('L', $ipSeek . chr(0)));
             fseek($fd, $ipSeek);
             $ipFlag = fread($fd, 1);
         }
@@ -251,7 +253,7 @@ class IpLocation
                     return "-\tSystem Error";
                 }
 
-                $addrSeek2 = implode('', unpack('L', $addrSeek2 . chr(0)));
+                $addrSeek2 = (int) implode('', unpack('L', $addrSeek2 . chr(0)));
                 fseek($fd, $addrSeek2);
             } else {
                 fseek($fd, -1, SEEK_CUR);
@@ -261,7 +263,7 @@ class IpLocation
                 $ipAddr2 .= $char;
             }
 
-            $addrSeek = implode('', unpack('L', $addrSeek . chr(0)));
+            $addrSeek = (int) implode('', unpack('L', $addrSeek . chr(0)));
             fseek($fd, $addrSeek);
 
             while (($char = fread($fd, 1)) !== chr(0)) {
@@ -282,7 +284,7 @@ class IpLocation
                     return "-\tSystem Error";
                 }
 
-                $addrSeek2 = implode('', unpack('L', $addrSeek2 . chr(0)));
+                $addrSeek2 = (int) implode('', unpack('L', $addrSeek2 . chr(0)));
                 fseek($fd, $addrSeek2);
             } else {
                 fseek($fd, -1, SEEK_CUR);

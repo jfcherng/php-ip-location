@@ -1,11 +1,11 @@
-# PHP IP Location
+# php-ip-location
 
 利用 `IPIP` 和 `cz88 （純真）` 兩個資料庫來查詢 IP 的地理位置。
 
 
 ## 安裝流程
 
-1. 使用 Composer 安裝： `composer require jfcherng/ip-location`
+1. 使用 Composer 安裝： `composer require jfcherng/php-ip-location`
 
 1. 取得 UTF-8 編碼的 `17monipdb.datx` IP 資料庫
 
@@ -31,7 +31,7 @@
 ```php
 <?php
 
-use Jfcherng\Ip\IpLocation;
+use Jfcherng\IpLocation\IpLocation;
 
 include __DIR__ . '/vendor/autoload.php';
 

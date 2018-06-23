@@ -1,6 +1,6 @@
 <?php
 
-use Jfcherng\Ip\IpLocation;
+use Jfcherng\IpLocation\IpLocation;
 
 include __DIR__ . '/vendor/autoload.php';
 
@@ -22,6 +22,6 @@ $results = IpLocation::lookup($ip);
 //    [0] => string(6)  "中国"
 //    [1] => string(6)  "天津"
 //    [2] => string(6)  "天津"
-//    [3] => string(24) "天津工程师范学院"
+//    [3] => string(24) "天津工程师范学院教育网"
 // }.
 var_dump($results);
