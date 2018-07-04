@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Jfcherng\IpLocation;
 
+use Exception;
+
 /**
  * Class for looking up IP location information.
  *
@@ -51,6 +53,8 @@ class IpLocation
 
     /**
      * The file handler of ipip DB file.
+     *
+     * @var null|false|resource
      */
     protected static $ipipFp = null;
     protected static $ipipIndex = null;
@@ -94,8 +98,6 @@ class IpLocation
      *
      * @param string $ip the IP string
      *
-     * @throws Exception
-     *
      * @return array the IP location results
      */
     public static function lookup(string $ip): array
@@ -111,6 +113,10 @@ class IpLocation
 
         // the primary result
         $result = $resultIpip;
+
+        if (empty($result) || count($result) < 4 || $result[0] === 'N/A') {
+            return [];
+        }
 
         if ($result[static::IPIP_COUNTRY] === $result[static::IPIP_PROVINCE]) {
             $result[static::IPIP_PROVINCE] = '';
@@ -334,14 +340,14 @@ class IpLocation
         }
 
         if (empty($ip)) {
-            return 'N/A';
+            return ['N/A'];
         }
 
         $nip = gethostbyname($ip);
         $ipdot = explode('.', $ip);
 
         if ($ipdot[0] < 0 || $ipdot[0] > 255 || count($ipdot) !== 4) {
-            return 'N/A';
+            return ['N/A'];
         }
 
         $nip2 = pack('N', ip2long($nip));
@@ -361,7 +367,7 @@ class IpLocation
         }
 
         if (!isset($indexOffset)) {
-            return 'N/A';
+            return ['N/A'];
         }
 
         fseek(static::$ipipFp, static::$ipipOffset['len'] + $indexOffset['len'] - 262144);
