@@ -24,4 +24,4 @@ $results = IpLocation::lookup($ip);
 //    [2] => string(6)  "天津"
 //    [3] => string(24) "天津工程师范学院教育网"
 // }.
-var_dump($results);
+\var_dump($results);
