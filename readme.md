@@ -5,7 +5,7 @@
 
 ## 安裝流程
 
-1. 使用 Composer 安裝： `composer require jfcherng/php-ip-location --no-dev`
+1. 使用 Composer 安裝： `composer require jfcherng/php-ip-location`
 
 1. 取得 UTF-8 編碼的 `17monipdb.datx` IP 資料庫
 
