@@ -25,6 +25,3 @@ vendor/
 !/var/.gitkeep
 *.7z
 *.zip
-
-*.dat
-*.datx
