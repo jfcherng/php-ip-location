@@ -4,13 +4,13 @@ use Jfcherng\IpLocation\IpLocation;
 
 include __DIR__ . '/vendor/autoload.php';
 
-// one time setup for the IpLocation class
+// 如果不想要使用內建的 IP 資料庫，請進行以下設定
 IpLocation::setup([
-    // the ipip DB file location
+    // ipip 資料庫的路徑
     'ipipDb' => __DIR__ . '/src/db/17monipdb.datx',
-    // the cz88 DB file location
+    // cz88 資料庫的路徑
     'cz88Db' => __DIR__ . '/src/db/qqwry.dat',
-    // whether the cz88 DB is UTF-8 encoded? (typically not)
+    // cz88 資料庫是否為 UTF-8 編碼
     'cz88DbIsUtf8' => false,
 ]);
 

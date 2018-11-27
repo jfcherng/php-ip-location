@@ -7,21 +7,23 @@
 
 1. 使用 Composer 安裝： `composer require jfcherng/php-ip-location`
 
-1. 取得 UTF-8 編碼的 `17monipdb.datx` IP 資料庫
+1. 這樣就可以了，但如果你想要自己更新 IP 資料庫，請參考以下步驟：
 
-   - 從 https://www.ipip.net/download.html 下載免費版離線資料庫
+   1. 取得 UTF-8 編碼的 `17monipdb.datx` IP 資料庫
 
-1. 取得 GB2312 編碼的 `qqwry.dat` IP 資料庫
+      - 從 https://www.ipip.net/download.html 下載免費版離線資料庫
 
-   - 從 http://update.cz88.net/soft/setup.zip 下載後解壓縮得到
-   
-   如果需要繁體化並改為 UTF-8 編碼：
-   
-   1. 使用 `IPLook.exe` 將 `qqwry.dat` 轉換為 txt 格式
-   1. 使用任意工具將 txt 轉換為 UTF-8 （有需要的話也可以自己轉繁體）
-   1. 使用 `IPLook.exe` 將 txt 轉換回 dat 格式
+   1. 取得 GB2312 編碼的 `qqwry.dat` IP 資料庫
 
-1. 於使用時設定兩個資料庫的路徑
+      - 從 http://update.cz88.net/soft/setup.zip 下載後解壓縮得到
+      
+      如果還需要繁體化並改為 UTF-8 編碼：
+      
+      1. 使用 `IPLook.exe` 將 `qqwry.dat` 轉換為 txt 格式
+      1. 使用任意工具將 txt 轉換為 UTF-8 （有需要的話也可以自己轉繁體）
+      1. 使用 `IPLook.exe` 將 txt 轉換回 dat 格式
+
+   1. 於使用時設定兩個資料庫的路徑
 
 
 ## 使用方式
@@ -35,13 +37,13 @@ use Jfcherng\IpLocation\IpLocation;
 
 include __DIR__ . '/vendor/autoload.php';
 
-// one time setup for the IpLocation class
+// 如果不想要使用內建的 IP 資料庫，請進行以下設定
 IpLocation::setup([
-    // the ipip DB file location
+    // ipip 資料庫的路徑
     'ipipDb' => __DIR__ . '/src/db/17monipdb.datx',
-    // the cz88 DB file location
+    // cz88 資料庫的路徑
     'cz88Db' => __DIR__ . '/src/db/qqwry.dat',
-    // whether the cz88 DB is UTF-8 encoded? (typically not)
+    // cz88 資料庫是否為 UTF-8 編碼
     'cz88DbIsUtf8' => false,
 ]);
 
@@ -53,9 +55,9 @@ $results = IpLocation::lookup($ip);
 //    [0] => string(6)  "中国"
 //    [1] => string(6)  "天津"
 //    [2] => string(6)  "天津"
-//    [3] => string(24) "天津工程师范学院"
+//    [3] => string(24) "天津工程师范学院教育网"
 // }.
-var_dump($results);
+\var_dump($results);
 ```
 
 
