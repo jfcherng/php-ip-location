@@ -2,6 +2,14 @@
 VERSION 1  INIT
 ===============
 
+   Version 1.1 - Add db into package
+      28/11/2018 07:45  1.1.0  initial release
+         9f6d5a5 Update deps
+         12f9534 Add db into repo
+         671503a Update README
+         490dbad Update deps
+         adcf106 Add license
+
    Version 1.0 - init
       04/09/2018 18:57  1.0.5  php-cs-fixer
          ec6713b php-cs-fixer: enable native_constant_invocation and native_function_invocation
