@@ -8,6 +8,9 @@ use ipip\db\City as ipipCity;
 
 final class IpLocation
 {
+    // flags
+    const RET_ASSOCIATIVE = 1 << 0;
+
     // indexes of array properties for our final result
     const IDX_COUNTRY = 0;
     const IDX_PROVINCE = 1;
@@ -68,17 +71,27 @@ final class IpLocation
     /**
      * Find IP location information.
      *
-     * @param string $ip the IP string
+     * @param string $ip    the IP string
+     * @param int    $flags the flags
+     *
+     * @throws \InvalidArgumentException
      *
      * @return array the IP location results
      */
-    public static function find(string $ip): array
+    public static function find(string $ip, int $flags = 0): array
     {
         $ip = \strtolower($ip);
 
         // convert hostname to IP
         if (!\preg_match('/^[0-9a-f.:]++$/u', $ip)) {
             $ip = \gethostbyname($ip);
+        }
+
+        if (
+            !\filter_var($ip, \FILTER_VALIDATE_IP, \FILTER_FLAG_IPV4) &&
+            !\filter_var($ip, \FILTER_VALIDATE_IP, \FILTER_FLAG_IPV6)
+        ) {
+            throw new \InvalidArgumentException("Invalid IP: {$ip}");
         }
 
         $resultsCz88 = self::findFromCz88($ip);
@@ -97,6 +110,16 @@ final class IpLocation
             !self::isInvalidEntry($resultsCz88, self::CZ88_ISP)
         ) {
             $results[self::IDX_ISP] = $resultsCz88[self::CZ88_ISP];
+        }
+
+        // return associative array?
+        if ($flags & self::RET_ASSOCIATIVE) {
+            $results = [
+                'country' => $results[self::IDX_COUNTRY],
+                'province' => $results[self::IDX_PROVINCE],
+                'county' => $results[self::IDX_COUNTY],
+                'isp' => $results[self::IDX_ISP],
+            ];
         }
 
         return $results;

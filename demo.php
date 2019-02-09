@@ -16,12 +16,12 @@ IpLocation::setup([
 
 $ip = '202.113.245.255';
 
-$results = IpLocation::find($ip);
+$results = IpLocation::find($ip, IpLocation::RET_ASSOCIATIVE);
 
-// array(4) {
-//    [0] => string(6)  "中国"
-//    [1] => string(6)  "天津"
-//    [2] => string(6)  "天津"
-//    [3] => string(24) "天津工程师范学院教育网"
-// }
+// [
+//     'country' => '中国',
+//     'province' => '天津',
+//     'county' => '天津',
+//     'isp' => '天津工程师范学院教育网',
+// ]
 \var_dump($results);
