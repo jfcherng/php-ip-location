@@ -1,4 +1,15 @@
 
+VERSION 2  UPDATE IPIP DB FORMAT
+================================
+
+   Version 2.0 - update ipip db format
+      09/02/2019 14:22  2.0.0  initial release
+         c53f7b1 Update ipip database format
+         359e33d Update db
+         1a47576 Update deps
+         9e20e3f year++
+         b6db1bc Update readme and demo.php
+
 VERSION 1  INIT
 ===============
 
