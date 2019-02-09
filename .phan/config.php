@@ -16,6 +16,7 @@ return [
     // your application should be included in this list.
     'directory_list' => [
         'src',
+        'vendor/ipip/db/src',
     ],
 
     // A directory list that defines files that will be excluded

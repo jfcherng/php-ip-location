@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace Jfcherng\IpLocation;
 
-use Exception;
+use ipip\db\City as ipipCity;
 
-/**
- * Class for looking up IP location information.
- *
- * @author Jack Cherng <jfcherng@gmail.com>
- */
-class IpLocation
+final class IpLocation
 {
+    // indexes of array properties for our final result
+    const IDX_COUNTRY = 0;
+    const IDX_PROVINCE = 1;
+    const IDX_COUNTY = 2;
+    const IDX_ISP = 3;
+
     // indexes of array properties for cz88 DB
     const CZ88_COUNTRY = 0;
     const CZ88_ISP = 1;
@@ -21,49 +22,32 @@ class IpLocation
     const IPIP_COUNTRY = 0;
     const IPIP_PROVINCE = 1;
     const IPIP_COUNTY = 2;
-    const IPIP_ISP = 3;
 
     /**
-     * The lookup results cache.
+     * The ipipCity instance.
+     *
+     * @var \ipip\db\City
+     */
+    private static $ipipCity;
+
+    /**
+     * The options.
      *
      * @var array
      */
-    protected static $cache = [];
-
-    /**
-     * The cz88 DB file location.
-     *
-     * @var string
-     */
-    protected static $cz88Db = __DIR__ . '/db/qqwry.dat';
-
-    /**
-     * Is the cz88 DB file UTF-8 encoded?
-     *
-     * @var bool true / false = UTF-8 / gb2312
-     */
-    protected static $cz88DbIsUtf8 = false;
-
-    /**
-     * The ipip DB file location.
-     *
-     * @var string
-     */
-    protected static $ipipDb = __DIR__ . '/db/17monipdb.datx';
-
-    /**
-     * The file handler of ipip DB file.
-     *
-     * @var null|false|resource
-     */
-    protected static $ipipFp = null;
-    protected static $ipipIndex = null;
-    protected static $ipipOffset = null;
+    private static $options = [
+        // the ipip DB file location
+        'ipipDb' => __DIR__ . '/db/ipipfree.ipdb',
+        // the cz88 DB file location
+        'cz88Db' => __DIR__ . '/db/qqwry.dat',
+        // is the cz88 DB file UTF-8 encoded?
+        'cz88DbIsUtf8' => false,
+    ];
 
     /**
      * Not allowing instantiation. Just use static methods.
      */
-    protected function __construct()
+    private function __construct()
     {
     }
 
@@ -72,68 +56,48 @@ class IpLocation
      *
      * @param array $options The options
      */
-    public static function setup(array $options = []): void
+    public static function setup(array $options): void
     {
-        if (isset($options['cz88Db'])) {
-            static::$cz88Db = $options['cz88Db'];
-        }
-
-        if (isset($options['cz88DbIsUtf8'])) {
-            static::$cz88DbIsUtf8 = $options['cz88DbIsUtf8'];
-        }
-
-        if (isset($options['ipipDb'])) {
-            static::$ipipDb = $options['ipipDb'];
-        }
-
-        // let ipipDb get reloaded
-        if (isset(static::$ipipFp)) {
-            \fclose(static::$ipipFp);
-            static::$ipipFp = null;
+        foreach ($options as $key => $value) {
+            if (\array_key_exists($key, self::$options)) {
+                self::$options[$key] = $value;
+            }
         }
     }
 
     /**
-     * Look up IP location information.
+     * Find IP location information.
      *
      * @param string $ip the IP string
      *
      * @return array the IP location results
      */
-    public static function lookup(string $ip): array
+    public static function find(string $ip): array
     {
-        $ip = \gethostbyname($ip);
-
-        if (isset(static::$cache[$ip])) {
-            return static::$cache[$ip];
+        // convert hostname to IP
+        if (!\preg_match('/^([0-9]{1,3}\.){4}$/u', "{$ip}.")) {
+            $ip = \gethostbyname($ip);
         }
 
-        $resultCz88 = static::lookupCz88($ip);
-        $resultIpip = static::lookupIpip($ip);
+        $resultsCz88 = self::findFromCz88($ip);
+        $resultsIpip = self::findFromIpip($ip);
 
-        // the primary result
-        $result = $resultIpip;
+        // use ipip's as the primary results
+        $results = $resultsIpip;
 
-        if (empty($result) || \count($result) < 4 || $result[0] === 'N/A') {
+        if (\count($results) < 3 || self::isInvalidEntry($results, 0)) {
             return [];
         }
 
-        if ($result[static::IPIP_COUNTRY] === $result[static::IPIP_PROVINCE]) {
-            $result[static::IPIP_PROVINCE] = '';
+        // use the ISP entry from cz88 DB
+        if (
+            !self::isInvalidEntry($resultsCz88, 0) &&
+            !self::isInvalidEntry($resultsCz88, self::CZ88_ISP)
+        ) {
+            $results[self::IDX_ISP] = $resultsCz88[self::CZ88_ISP];
         }
 
-        // utilize results from cz88 DB as well
-        if ($resultCz88[0] !== '-') {
-            $resultCz88 = \explode("\t", $resultCz88, 2);
-
-            if ($resultCz88[static::CZ88_ISP] !== '') {
-                $result[static::IPIP_ISP] = $resultCz88[static::CZ88_ISP];
-            }
-        }
-
-        static::$cache[$ip] = $result;
-
-        return $result;
+        return $results;
     }
 
     /**
@@ -141,14 +105,44 @@ class IpLocation
      *
      * @param string $ip the IP string
      *
-     * @throws Exception invalid db file
+     * @throws \Exception invalid db file
      *
-     * @return string the IP location results
+     * @return array the IP location results
      */
-    protected static function lookupCz88(string $ip): string
+    private static function findFromCz88(string $ip): array
     {
-        if (!$fd = \fopen(static::$cz88Db, 'r')) {
-            throw new Exception('Invalid qqwry.dat file!');
+        return \explode("\t", self::findFromCz88String($ip));
+    }
+
+    /**
+     * Look up IP location information from ipip DB.
+     *
+     * @see https://github.com/ipipdotnet/ipdb-php
+     *
+     * @param string $ip the IP string
+     *
+     * @return array the IP location results
+     */
+    private static function findFromIpip(string $ip): array
+    {
+        self::$ipipCity = self::$ipipCity ?? new ipipCity(self::$options['ipipDb']);
+
+        return self::$ipipCity->find($ip, 'CN');
+    }
+
+    /**
+     * Look up IP location information from cz88 DB.
+     *
+     * @param string $ip the IP string
+     *
+     * @throws \Exception invalid db file
+     *
+     * @return string the IP location results (delimited with \t)
+     */
+    private static function findFromCz88String(string $ip): string
+    {
+        if (!$fd = \fopen(self::$options['cz88Db'], 'r')) {
+            throw new \Exception('Invalid qqwry.dat file!');
         }
 
         $ip = \explode('.', $ip);
@@ -308,70 +302,29 @@ class IpLocation
             $ipaddr = "-\tUnknown";
         }
 
-        return static::$cz88DbIsUtf8 ? $ipaddr : \iconv('gb2312', 'utf-8', $ipaddr);
+        if (
+            !self::$options['cz88DbIsUtf8'] &&
+            // iconv may fail and return false
+            ($ipaddrU8 = @\iconv('gb2312', 'utf-8', $ipaddr))
+        ) {
+            $ipaddr = $ipaddrU8;
+        }
+
+        return $ipaddr;
     }
 
     /**
-     * Look up IP location information from ipip DB.
+     * Determine if invalid entry.
      *
-     * @see https://github.com/ipipdotnet/datx-php
+     * @param array $array the array
+     * @param int   $index the index
      *
-     * @param string $ip the IP string
-     *
-     * @throws Exception invalid db file
-     *
-     * @return array the IP location results
+     * @return bool true if invalid entry, False otherwise
      */
-    protected static function lookupIpip(string $ip): array
+    private static function isInvalidEntry(array $array, int $index): bool
     {
-        // init
-        if (!isset(static::$ipipFp)) {
-            static::$ipipFp = \fopen(static::$ipipDb, 'r');
-            if (static::$ipipFp === false) {
-                throw new Exception('Invalid 17monipdb.datx file!');
-            }
+        $data = $array[$index] ?? null;
 
-            static::$ipipOffset = \unpack('Nlen', \fread(static::$ipipFp, 4));
-            if (static::$ipipOffset['len'] < 4) {
-                throw new Exception('Invalid 17monipdb.datx file!');
-            }
-
-            static::$ipipIndex = \fread(static::$ipipFp, static::$ipipOffset['len'] - 4);
-        }
-
-        if (empty($ip)) {
-            return ['N/A'];
-        }
-
-        $nip = \gethostbyname($ip);
-        $ipdot = \explode('.', $ip);
-
-        if ($ipdot[0] < 0 || $ipdot[0] > 255 || \count($ipdot) !== 4) {
-            return ['N/A'];
-        }
-
-        $nip2 = \pack('N', \ip2long($nip));
-
-        $tmpOffset = ((int) $ipdot[0] * 256 + (int) $ipdot[1]) * 4;
-        $start = \unpack('Vlen', static::$ipipIndex[$tmpOffset] . static::$ipipIndex[$tmpOffset + 1] . static::$ipipIndex[$tmpOffset + 2] . static::$ipipIndex[$tmpOffset + 3]);
-
-        $indexOffset = $indexLength = null;
-        $maxCompLen = static::$ipipOffset['len'] - 262144 - 4;
-        for ($start = $start['len'] * 9 + 262144; $start < $maxCompLen; $start += 9) {
-            if (static::$ipipIndex[$start] . static::$ipipIndex[$start + 1] . static::$ipipIndex[$start + 2] . static::$ipipIndex[$start + 3] >= $nip2) {
-                $indexOffset = \unpack('Vlen', static::$ipipIndex[$start + 4] . static::$ipipIndex[$start + 5] . static::$ipipIndex[$start + 6] . "\x0");
-                $indexLength = \unpack('nlen', static::$ipipIndex[$start + 7] . static::$ipipIndex[$start + 8]);
-
-                break;
-            }
-        }
-
-        if (!isset($indexOffset)) {
-            return ['N/A'];
-        }
-
-        \fseek(static::$ipipFp, static::$ipipOffset['len'] + $indexOffset['len'] - 262144);
-
-        return \explode("\t", \fread(static::$ipipFp, $indexLength['len']));
+        return !isset($data) || $data === '' || $data === '-' || \strtoupper($data) === 'N/A';
     }
 }
