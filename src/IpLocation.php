@@ -147,7 +147,7 @@ class IpLocation
      */
     protected static function lookupCz88(string $ip): string
     {
-        if (!$fd = \fopen(static::$cz88Db, 'rb')) {
+        if (!$fd = \fopen(static::$cz88Db, 'r')) {
             throw new Exception('Invalid qqwry.dat file!');
         }
 
@@ -326,7 +326,7 @@ class IpLocation
     {
         // init
         if (!isset(static::$ipipFp)) {
-            static::$ipipFp = \fopen(static::$ipipDb, 'rb');
+            static::$ipipFp = \fopen(static::$ipipDb, 'r');
             if (static::$ipipFp === false) {
                 throw new Exception('Invalid 17monipdb.datx file!');
             }
