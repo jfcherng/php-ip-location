@@ -3,6 +3,8 @@ VERSION 2  UPDATE IPIP DB FORMAT
 ================================
 
    Version 2.0 - update ipip db format
+      09/02/2019 14:41  2.0.1  nits
+         33735b2 nits
       09/02/2019 14:22  2.0.0  initial release
          c53f7b1 Update ipip database format
          359e33d Update db
