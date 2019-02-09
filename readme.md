@@ -9,15 +9,17 @@
 
 1. 這樣就可以了，但如果你想要自己更新 IP 資料庫，請參考以下步驟：
 
-   1. 取得 UTF-8 編碼的 `17monipdb.datx` IP 資料庫
+   1. 取得 UTF-8 編碼的 `ipipfree.ipdb` IP 資料庫
 
       - 從 https://www.ipip.net/download.html 下載免費版離線資料庫
+        （需要登入，可以免費註冊帳號）
 
    1. 取得 GB2312 編碼的 `qqwry.dat` IP 資料庫
 
-      - 從 http://update.cz88.net/soft/setup.zip 下載後解壓縮得到
+      - 下載 http://update.cz88.net/soft/setup.zip 後解壓縮得到 `setup.exe`
+      - 使用 `UniExtract` 或其他工具將 `setup.exe` 解壓縮得到 `qqwry.dat`
       
-      如果還需要繁體化並改為 UTF-8 編碼：
+      如果還需要繁體化或改為 UTF-8 編碼：
       
       1. 使用 `IPLook.exe` 將 `qqwry.dat` 轉換為 txt 格式
       1. 使用任意工具將 txt 轉換為 UTF-8 （有需要的話也可以自己轉繁體）

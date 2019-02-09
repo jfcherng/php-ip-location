@@ -74,8 +74,10 @@ final class IpLocation
      */
     public static function find(string $ip): array
     {
+        $ip = \strtolower($ip);
+
         // convert hostname to IP
-        if (!\preg_match('/^([0-9]{1,3}\.){4}$/u', "{$ip}.")) {
+        if (!\preg_match('/^[0-9a-f.:]++$/u', $ip)) {
             $ip = \gethostbyname($ip);
         }
 
