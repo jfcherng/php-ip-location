@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jfcherng/php-ip-location.svg?branch=master)](https://travis-ci.org/jfcherng/php-ip-location)
+
 # php-ip-location
 
 利用 `IPIP` 和 `cz88 （純真）` 兩個資料庫來查詢 IP 的地理位置。
