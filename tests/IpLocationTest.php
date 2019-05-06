@@ -9,8 +9,10 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
+ *
+ * @internal
  */
-class IpLocationTest extends TestCase
+final class IpLocationTest extends TestCase
 {
     /**
      * PHPUnit routine for class.
@@ -66,7 +68,7 @@ class IpLocationTest extends TestCase
     {
         $output = IpLocation::find($input);
 
-        $this->assertSame($expected, $output);
+        static::assertSame($expected, $output);
     }
 
     /**
@@ -86,7 +88,7 @@ class IpLocationTest extends TestCase
             'isp' => '天津工程师范学院教育网',
         ];
 
-        $this->assertSame(
+        static::assertSame(
             \arraySortedRecursive($expected, 'asort'),
             \arraySortedRecursive($output, 'asort')
         );
