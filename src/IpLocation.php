@@ -170,8 +170,8 @@ final class IpLocation
             throw new \Exception('Invalid qqwry.dat file!');
         }
 
-        $ip = \explode('.', $ip);
-        $ipNum = $ip[0] * 16777216 + $ip[1] * 65536 + $ip[2] * 256 + $ip[3];
+        $ip = \array_map('intval', \explode('.', $ip));
+        $ipNum = ($ip[0] << 24) + ($ip[1] << 16) + ($ip[2] << 8) + $ip[3];
 
         if (!($dataBegin = \fread($fd, 4)) || !($dataEnd = \fread($fd, 4))) {
             return "-\tSystem Error";
