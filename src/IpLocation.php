@@ -179,12 +179,12 @@ final class IpLocation
 
         $ipbegin = (int) \implode('', \unpack('L', $dataBegin));
         if ($ipbegin < 0) {
-            $ipbegin += 2 ** 32;
+            $ipbegin += 2 << 31;
         }
 
         $ipend = (int) \implode('', \unpack('L', $dataEnd));
         if ($ipend < 0) {
-            $ipend += 2 ** 32;
+            $ipend += 2 << 31;
         }
 
         $ipAllNum = ($ipend - $ipbegin) / 7 + 1;
@@ -205,7 +205,7 @@ final class IpLocation
 
             $ip1num = (int) \implode('', \unpack('L', $ipData1));
             if ($ip1num < 0) {
-                $ip1num += 2 ** 32;
+                $ip1num += 2 << 31;
             }
 
             if ($ip1num > $ipNum) {
@@ -233,7 +233,7 @@ final class IpLocation
 
             $ip2num = (int) \implode('', \unpack('L', $ipData2));
             if ($ip2num < 0) {
-                $ip2num += 2 ** 32;
+                $ip2num += 2 << 31;
             }
 
             if ($ip2num < $ipNum) {
