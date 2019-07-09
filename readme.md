@@ -11,23 +11,16 @@
 
 1. 這樣就可以了，但如果你想要自己更新 IP 資料庫，請參考以下步驟：
 
-   1. 取得 UTF-8 編碼的 `ipipfree.ipdb` IP 資料庫
+   1. 取得 IPIP.net 的 IP 離線資料庫 (`ipipfree.ipdb`)
 
       - 從 https://www.ipip.net/download.html 下載免費版離線資料庫
-        （需要登入，可以免費註冊帳號）
+        （需要登入以及手機驗證，可以免費註冊帳號）
 
-   1. 取得 GB2312 編碼的 `qqwry.dat` IP 資料庫
+   1. 純真 IP 資料庫 (`qqwry.dat`) 的 IPDB 格式版本
+   
+      - 從 https://github.com/metowolf/qqwry.ipdb 下載[標準版](https://cdn.jsdelivr.net/npm/qqwry.ipdb/qqwry.ipdb)
 
-      - 下載 http://update.cz88.net/soft/setup.zip 後解壓縮得到 `setup.exe`
-      - 使用 `UniExtract` 或其他工具將 `setup.exe` 解壓縮得到 `qqwry.dat`
-      
-      如果還需要繁體化或改為 UTF-8 編碼：
-      
-      1. 使用 `IPLook.exe` 將 `qqwry.dat` 轉換為 txt 格式
-      1. 使用任意工具將 txt 轉換為 UTF-8 （有需要的話也可以自己轉繁體）
-      1. 使用 `IPLook.exe` 將 txt 轉換回 dat 格式
-
-   1. 於使用時設定兩個資料庫的路徑
+   1. 於使用時自行設定兩個資料庫的路徑
 
 
 ## 使用方式
@@ -41,27 +34,35 @@ use Jfcherng\IpLocation\IpLocation;
 
 include __DIR__ . '/vendor/autoload.php';
 
+$ipFinder = IpLocation::getInstance();
+
 // 如果不想要使用內建的 IP 資料庫，請進行以下設定
-IpLocation::setup([
+$ipFinder->setup([
     // ipip 資料庫的路徑
     'ipipDb' => __DIR__ . '/src/db/ipipfree.ipdb',
     // cz88 資料庫的路徑
-    'cz88Db' => __DIR__ . '/src/db/qqwry.dat',
-    // cz88 資料庫是否為 UTF-8 編碼
-    'cz88DbIsUtf8' => false,
+    'cz88Db' => __DIR__ . '/src/db/qqwry.ipdb',
 ]);
 
 $ip = '202.113.245.255';
 
-$results = IpLocation::find($ip, IpLocation::RET_ASSOCIATIVE);
+$results = $ipFinder->find($ip);
 
-// [
-//     'country' => '中国',
-//     'province' => '天津',
-//     'county' => '天津',
-//     'isp' => '天津工程师范学院教育网',
-// ]
 \var_dump($results);
+/*
+array(5) {
+  ["country_name"]=>
+  string(6) "中国"
+  ["region_name"]=>
+  string(6) "天津"
+  ["city_name"]=>
+  string(6) "天津"
+  ["owner_domain"]=>
+  string(0) ""
+  ["isp_domain"]=>
+  string(9) "教育网"
+}
+*/
 ```
 
 

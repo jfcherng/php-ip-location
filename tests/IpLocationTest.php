@@ -19,10 +19,11 @@ final class IpLocationTest extends TestCase
      */
     public static function setupBeforeClass(): void
     {
-        IpLocation::setup([
+        $ipFinder = IpLocation::getInstance();
+
+        $ipFinder->setup([
             'ipipDb' => __DIR__ . '/../src/db/ipipfree.ipdb',
-            'cz88Db' => __DIR__ . '/../src/db/qqwry.dat',
-            'cz88DbIsUtf8' => false,
+            'cz88Db' => __DIR__ . '/../src/db/qqwry.ipdb',
         ]);
     }
 
@@ -37,19 +38,21 @@ final class IpLocationTest extends TestCase
             [
                 '202.113.245.255',
                 [
-                    '中国',
-                    '天津',
-                    '天津',
-                    '天津工程师范学院教育网',
+                    'country_name' => '中国',
+                    'region_name' => '天津',
+                    'city_name' => '天津',
+                    'owner_domain' => '',
+                    'isp_domain' => '教育网',
                 ],
             ],
             [
                 '0.0.0.0',
                 [
-                    '保留地址',
-                    '保留地址',
-                    '',
-                    'IANA',
+                    'country_name' => '保留地址',
+                    'region_name' => '保留地址',
+                    'city_name' => '',
+                    'owner_domain' => '',
+                    'isp_domain' => '',
                 ],
             ],
         ];
@@ -66,32 +69,11 @@ final class IpLocationTest extends TestCase
      */
     public function testFind(string $input, array $expected): void
     {
-        $output = IpLocation::find($input);
+        $ipFinder = IpLocation::getInstance();
+
+        $output = $ipFinder->find($input);
 
         static::assertSame($expected, $output);
-    }
-
-    /**
-     * Test the IpLocation::find with flags.
-     *
-     * @covers \Jfcherng\IpLocation\IpLocation::find
-     */
-    public function testFindWithFlags(): void
-    {
-        $input = '202.113.245.255';
-        $output = IpLocation::find($input, IpLocation::RET_ASSOCIATIVE);
-
-        $expected = [
-            'country' => '中国',
-            'province' => '天津',
-            'county' => '天津',
-            'isp' => '天津工程师范学院教育网',
-        ];
-
-        static::assertSame(
-            \arraySortedRecursive($expected, 'asort'),
-            \arraySortedRecursive($output, 'asort')
-        );
     }
 
     /**
@@ -105,6 +87,8 @@ final class IpLocationTest extends TestCase
     public function testFindWithInvalidIp(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $output = IpLocation::find('a.b.c.d');
+
+        $ipFinder = IpLocation::getInstance();
+        $output = $ipFinder->find('a.b.c.d');
     }
 }
