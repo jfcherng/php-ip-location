@@ -118,12 +118,7 @@ final class IpLocation
             $this->findFromIpdb($ip, $this->options['ipipDb'])
         );
 
-        // add missing fields
-        foreach (self::$ipdbFields as $field => $default) {
-            $results[$field] = $results[$field] ?? $default;
-        }
-
-        return $results;
+        return $this->addIpdbMissingFields($results);
     }
 
     /**
@@ -145,5 +140,21 @@ final class IpLocation
         $reader = self::$ipdbReaders[$dbFile];
 
         return $reader->findMap($ip) ?? [];
+    }
+
+    /**
+     * Add missing fields for the IPDB lookup result.
+     *
+     * @param array $result the ipdb result
+     *
+     * @return array
+     */
+    private function addIpdbMissingFields(array $result): array
+    {
+        foreach (self::$ipdbFields as $field => $default) {
+            $result[$field] = $result[$field] ?? $default;
+        }
+
+        return $result;
     }
 }
