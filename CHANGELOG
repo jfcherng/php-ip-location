@@ -1,4 +1,22 @@
 
+VERSION 3  ALWAYS USE IPDB FORMAT
+=================================
+
+   Version 3.0 - always use IPDB format
+      10/07/2019 04:25  3.0.0  initial release
+         21eabc1 Always use IPDB format database
+         1988e63 Update deps
+         31c0dd1 nits
+         9649855 Fix a phan error
+         335c4f2 Add .gitattributes
+         4d1d077 $ composer fix
+         f95e70a Update deps
+         7d10761 Update .travis.yml for 7.4snapshot
+         40b3dd2 Add .editorconfig
+         adf0b28 Update deps
+         632617a nits
+         2f5ef30 Update readme
+
 VERSION 2  UPDATE IPIP DB FORMAT
 ================================
 
