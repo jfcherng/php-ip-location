@@ -65,7 +65,7 @@ final class IpLocation
     /**
      * Setup properties for this class.
      *
-     * @param array $options The options
+     * @param array $options the options
      */
     public function setup(array $options): void
     {
@@ -79,7 +79,7 @@ final class IpLocation
     /**
      * Get the instance.
      *
-     * @return self the instance
+     * @return self
      */
     public static function getInstance(): self
     {
