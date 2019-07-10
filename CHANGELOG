@@ -3,6 +3,10 @@ VERSION 3  ALWAYS USE IPDB FORMAT
 =================================
 
    Version 3.0 - always use IPDB format
+      10/07/2019 10:19  3.0.1  Update ipipfreedb_20190703
+         cb9f2c6 Update ipipfreedb_20190703
+         3d7ea20 Split out IpLocation::addIpdbMissingFields()
+         c9ca93f Fix phpdoc typos
       10/07/2019 04:25  3.0.0  initial release
          21eabc1 Always use IPDB format database
          1988e63 Update deps
