@@ -1,6 +1,11 @@
-[![Build Status](https://travis-ci.org/jfcherng/php-ip-location.svg?branch=master)](https://travis-ci.org/jfcherng/php-ip-location)
-
 # php-ip-location
+
+<a href="https://travis-ci.org/jfcherng/php-ip-location"><img alt="Travis (.org) branch" src="https://img.shields.io/travis/jfcherng/php-ip-location/master"></a>
+<a href="https://packagist.org/packages/jfcherng/php-ip-location"><img alt="Packagist" src="https://img.shields.io/packagist/dt/jfcherng/php-ip-location"></a>
+<a href="https://packagist.org/packages/jfcherng/php-ip-location"><img alt="Packagist Version" src="https://img.shields.io/packagist/v/jfcherng/php-ip-location"></a>
+<a href="https://github.com/jfcherng/php-ip-location/blob/master/LICENSE"><img alt="Project license" src="https://img.shields.io/github/license/jfcherng/php-ip-location"></a>
+<a href="https://github.com/jfcherng/php-ip-location/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/jfcherng/php-ip-location?logo=github"></a>
+<a href="https://www.paypal.me/jfcherng/5usd" title="Donate to this project using Paypal"><img src="https://img.shields.io/badge/paypal-donate-blue.svg?logo=paypal" /></a>
 
 利用 `IPIP` 和 `cz88 （純真）` 兩個資料庫來查詢 IP 的地理位置。
 
@@ -64,9 +69,3 @@ array(5) {
 }
 */
 ```
-
-
-Supporters <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ATXYY9Y78EQ3Y" target="_blank"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" /></a>
-==========
-
-Thank you guys for sending me some cups of coffee.
