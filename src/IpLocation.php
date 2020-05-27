@@ -78,8 +78,6 @@ final class IpLocation
 
     /**
      * Get the instance.
-     *
-     * @return self
      */
     public static function getInstance(): self
     {
@@ -146,8 +144,6 @@ final class IpLocation
      * Add missing fields for the IPDB lookup result.
      *
      * @param array $result the ipdb result
-     *
-     * @return array
      */
     private function addIpdbMissingFields(array $result): array
     {

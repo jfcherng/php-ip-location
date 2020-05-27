@@ -3,6 +3,13 @@ VERSION 3  ALWAYS USE IPDB FORMAT
 =================================
 
    Version 3.0 - always use IPDB format
+      28/05/2020 03:27  3.0.2  allow PHP 8
+         a1ab1b7 chore: update deps
+         7cc645c chore: Composer PHP constrain >=7.1.3
+         8a93e52 docs: use markdown grammar badges in readme
+         54bb0ad Update .travis.yml to PHP 7.4 stable
+         2c4bc94 Update deps
+         90472ba Update readme to use badges from shields.io
       10/07/2019 10:19  3.0.1  Update ipipfreedb_20190703
          cb9f2c6 Update ipipfreedb_20190703
          3d7ea20 Split out IpLocation::addIpdbMissingFields()
