@@ -1,11 +1,11 @@
 # php-ip-location
 
-[![Travis (.org) branch](https://img.shields.io/travis/jfcherng/php-ip-location/master)](https://travis-ci.org/jfcherng/php-ip-location)
-[![Packagist](https://img.shields.io/packagist/dt/jfcherng/php-ip-location)](https://packagist.org/packages/jfcherng/php-ip-location)
-[![Packagist Version](https://img.shields.io/packagist/v/jfcherng/php-ip-location)](https://packagist.org/packages/jfcherng/php-ip-location)
-[![Project license](https://img.shields.io/github/license/jfcherng/php-ip-location)](https://github.com/jfcherng/php-ip-location/blob/master/LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/jfcherng/php-ip-location?logo=github)](https://github.com/jfcherng/php-ip-location/stargazers)
-[![Donate to this project using Paypal](https://img.shields.io/badge/paypal-donate-blue.svg?logo=paypal)](https://www.paypal.me/jfcherng/5usd)
+[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/jfcherng/php-ip-location/Main/master?style=flat-square)](https://github.com/jfcherng/php-ip-location/actions)
+[![Packagist](https://img.shields.io/packagist/dt/jfcherng/php-ip-location?style=flat-square)](https://packagist.org/packages/jfcherng/php-ip-location)
+[![Packagist Version](https://img.shields.io/packagist/v/jfcherng/php-ip-location?style=flat-square)](https://packagist.org/packages/jfcherng/php-ip-location)
+[![Project license](https://img.shields.io/github/license/jfcherng/php-ip-location?style=flat-square)](https://github.com/jfcherng/php-ip-location/blob/master/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/jfcherng/php-ip-location?style=flat-square&logo=github)](https://github.com/jfcherng/php-ip-location/stargazers)
+[![Donate to this project using Paypal](https://img.shields.io/badge/paypal-donate-blue.svg?style=flat-square&logo=paypal)](https://www.paypal.me/jfcherng/5usd)
 
 利用 `IPIP` 和 `cz88 （純真）` 兩個資料庫來查詢 IP 的地理位置。
 
