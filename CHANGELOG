@@ -3,6 +3,12 @@ VERSION 3  ALWAYS USE IPDB FORMAT
 =================================
 
    Version 3.0 - always use IPDB format
+      06/11/2020 22:03  3.0.3  update db
+         20122fc chore: update qqwry.ipdb
+         7fb0506 chore: update deps
+         702c4ec chore: Composer 2 no longer needs hirak/prestissimo
+         6ecc2d7 chore(ci): migrate CI from Travis to GitHub Actions
+         bf12d54 chore: update license year
       28/05/2020 03:27  3.0.2  allow PHP 8
          a1ab1b7 chore: update deps
          7cc645c chore: Composer PHP constrain >=7.1.3
