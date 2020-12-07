@@ -21,8 +21,8 @@
         "ipip/db": "^1.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.15",
-        "phan/phan": "^2 || ^3",
+        "friendsofphp/php-cs-fixer": "^2.17",
+        "phan/phan": "^2 || ^3 || ^4",
         "phpunit/phpunit": ">=7 <10",
         "squizlabs/php_codesniffer": "^3.5"
     },
