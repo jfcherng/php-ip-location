@@ -104,8 +104,8 @@ final class IpLocation
 
         // the input cannot be an valid IP
         if (
-            !\filter_var($ip, \FILTER_VALIDATE_IP, \FILTER_FLAG_IPV4) &&
-            !\filter_var($ip, \FILTER_VALIDATE_IP, \FILTER_FLAG_IPV6)
+            !\filter_var($ip, \FILTER_VALIDATE_IP, \FILTER_FLAG_IPV4)
+            && !\filter_var($ip, \FILTER_VALIDATE_IP, \FILTER_FLAG_IPV6)
         ) {
             throw new \InvalidArgumentException("Invalid IP: {$ip}");
         }
