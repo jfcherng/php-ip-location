@@ -1,6 +1,6 @@
 # php-ip-location
 
-[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/jfcherng/php-ip-location/Main/master?style=flat-square)](https://github.com/jfcherng/php-ip-location/actions)
+[![GitHub Workflow Status (branch)](https://img.shields.io/github/actions/workflow/status/jfcherng/php-ip-location/php.yml?branch=master&style=flat-square)](https://github.com/jfcherng/php-ip-location/actions)
 [![Packagist](https://img.shields.io/packagist/dt/jfcherng/php-ip-location?style=flat-square)](https://packagist.org/packages/jfcherng/php-ip-location)
 [![Packagist Version](https://img.shields.io/packagist/v/jfcherng/php-ip-location?style=flat-square)](https://packagist.org/packages/jfcherng/php-ip-location)
 [![Project license](https://img.shields.io/github/license/jfcherng/php-ip-location?style=flat-square)](https://github.com/jfcherng/php-ip-location/blob/master/LICENSE)
