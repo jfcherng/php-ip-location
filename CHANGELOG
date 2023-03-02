@@ -3,6 +3,9 @@ VERSION 3  ALWAYS USE IPDB FORMAT
 =================================
 
    Version 3.0 - always use IPDB format
+      02/03/2023 08:27  3.0.5  fix: breaking change in ipip/db v1.0.1
+         3da532b fix: breaking change in ipip/db v1.0.1
+         03c2a3f chore: also test against PHP 8.1/8.2
       06/11/2020 22:03  3.0.3  update db
          20122fc chore: update qqwry.ipdb
          7fb0506 chore: update deps
