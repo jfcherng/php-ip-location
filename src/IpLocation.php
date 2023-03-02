@@ -88,12 +88,13 @@ final class IpLocation
      * Find IP location information.
      *
      * @param string $ip the IP/hostname string
+     * @param string $language the language
      *
      * @throws \InvalidArgumentException
      *
      * @return array the IP location information
      */
-    public function find(string $ip): array
+    public function find(string $ip, string $language = 'CN'): array
     {
         $ip = \strtolower(\trim($ip));
 
@@ -111,9 +112,9 @@ final class IpLocation
         }
 
         $results = \array_merge(
-            $this->findFromIpdb($ip, $this->options['cz88Db']),
+            $this->findFromIpdb($ip, $this->options['cz88Db'], $language),
             // prefer IPIP's result
-            $this->findFromIpdb($ip, $this->options['ipipDb'])
+            $this->findFromIpdb($ip, $this->options['ipipDb'], $language)
         );
 
         return $this->addIpdbMissingFields($results);
@@ -129,7 +130,7 @@ final class IpLocation
      *
      * @return array the lookup result
      */
-    private function findFromIpdb(string $ip, string $dbFile): array
+    private function findFromIpdb(string $ip, string $dbFile, string $language): array
     {
         if (!isset(self::$ipdbReaders[$dbFile])) {
             self::$ipdbReaders[$dbFile] = new ipdbReader($dbFile);
@@ -137,7 +138,7 @@ final class IpLocation
 
         $reader = self::$ipdbReaders[$dbFile];
 
-        return $reader->findMap($ip) ?? [];
+        return $reader->findMap($ip, $language) ?? [];
     }
 
     /**
