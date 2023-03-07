@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Jfcherng\IpLocation;
 
-use ipip\db\Reader as ipdbReader;
+use ipip\db\Reader as IpdbReader;
 
 final class IpLocation
 {
@@ -133,7 +133,7 @@ final class IpLocation
     private function findFromIpdb(string $ip, string $dbFile, string $language): array
     {
         if (!isset(self::$ipdbReaders[$dbFile])) {
-            self::$ipdbReaders[$dbFile] = new ipdbReader($dbFile);
+            self::$ipdbReaders[$dbFile] = new IpdbReader($dbFile);
         }
 
         $reader = self::$ipdbReaders[$dbFile];
